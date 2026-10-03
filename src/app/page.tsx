@@ -96,26 +96,31 @@ export default function Home() {
             <Link href="/" className="font-black tracking-tighter text-red-600">
               HOME
             </Link>
-            <Link href="/about" className="font-black tracking-tighter text-red-600">
+            <Link
+              href="/about"
+              className="font-black tracking-tighter text-red-600"
+            >
               ABOUT
             </Link>
-            <Link href="/contact" className="font-black tracking-tighter text-red-600">
+            <Link
+              href="/contact"
+              className="font-black tracking-tighter text-red-600"
+            >
               CONTACT
             </Link>
-            <Link href="/privacy" className="font-black tracking-tighter text-red-600">
+            <Link
+              href="/privacy"
+              className="font-black tracking-tighter text-red-600"
+            >
               PRIVACY
             </Link>
           </nav>
         </div>
 
-        <h1 className="scale-125 text-red-600 text-[6rem] leading-[0.75] tracking-[-0.12em] font-[1000] text-center sm:scale-150 sm:text-[8rem] md:scale-200 md:text-[10rem]">
+        <h1 className="scale-125 text-red-600 text-[6rem] leading-[0.75] tracking-[-0.08em] font-[1000] text-center sm:scale-150 sm:text-[8rem] md:scale-200 md:text-[10rem]">
           <span className="block">TONX</span>
           <span className="block">GRIP</span>
         </h1>
-
-        <p className="absolute top-31/100 left-79/200 w-30 text-xl text-center uppercase font-black text-red-600/5 tracking-tighter">
-          the sock that doesn&apos;t slip
-        </p>
 
         <div className="absolute top-5/6 w-1/2">
           <div className="absolute inset-0 translate-x-[10px] translate-y-[10px] bg-[rgba(50,0,0,1)]" />
