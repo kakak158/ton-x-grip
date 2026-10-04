@@ -24,3 +24,21 @@ body {
   color: var(--foreground);
   font-family: var(--font-inter), sans-serif;
 }
+
+@media (max-height: 699px) {
+  .hero-wordmark {
+    font-size: 5rem;
+  }
+}
+
+@media (max-height: 699px) and (min-width: 640px) {
+  .hero-wordmark {
+    font-size: 8rem;
+  }
+}
+
+@media (max-height: 699px) and (min-width: 1024px) {
+  .hero-wordmark {
+    font-size: 10rem;
+  }
+}

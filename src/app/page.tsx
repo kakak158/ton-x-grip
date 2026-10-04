@@ -25,54 +25,66 @@ export default function Home() {
       const progressFill = problemSection.current?.querySelector(
         ".problem-progress-fill",
       );
+      const media = gsap.matchMedia();
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: problemSection.current,
-          start: "top top",
-          end: "+=3000",
-          pin: true,
-          scrub: true,
-          onUpdate: (self) => {
-            if (progressFill) {
-              gsap.set(progressFill, { scaleX: self.progress });
-            }
-            progressTrack?.setAttribute(
-              "aria-valuenow",
-              String(Math.round(self.progress * 100)),
-            );
+      const createTimeline = (pin: boolean) => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: problemSection.current,
+            start: "top top",
+            end: pin ? "+=2200" : "bottom top",
+            pin,
+            scrub: true,
+            onUpdate: (self) => {
+              if (progressFill) {
+                gsap.set(progressFill, { scaleX: self.progress });
+              }
+              progressTrack?.setAttribute(
+                "aria-valuenow",
+                String(Math.round(self.progress * 100)),
+              );
+            },
           },
-        },
+        });
+
+        tl.to(texts[0], {
+          opacity: 1,
+          duration: 0.8,
+        })
+          .to(texts[0], {
+            opacity: 0,
+            duration: 0.8,
+          })
+          .to(texts[1], {
+            opacity: 1,
+            duration: 0.8,
+          })
+          .to(texts[1], {
+            opacity: 1,
+            duration: 1.5,
+          })
+          .to(texts[1], {
+            opacity: 0,
+            duration: 0.8,
+          })
+          .to(texts[2], {
+            opacity: 1,
+            duration: 0.8,
+          })
+          .to(texts[2], {
+            opacity: 1,
+            duration: 1.5,
+          });
+      };
+
+      media.add("(min-width: 768px) and (min-height: 520px)", () => {
+        createTimeline(true);
+      });
+      media.add("(max-width: 767px), (max-height: 519px)", () => {
+        createTimeline(false);
       });
 
-      tl.to(texts[0], {
-        opacity: 1,
-        duration: 1.5,
-      })
-        .to(texts[0], {
-          opacity: 0,
-          duration: 0.8,
-        })
-        .to(texts[1], {
-          opacity: 1,
-          duration: 0.8,
-        })
-        .to(texts[1], {
-          opacity: 1,
-          duration: 1.5,
-        })
-        .to(texts[1], {
-          opacity: 0,
-          duration: 0.8,
-        })
-        .to(texts[2], {
-          opacity: 1,
-          duration: 0.8,
-        })
-        .to(texts[2], {
-          opacity: 1,
-          duration: 1.5,
-        });
+      return () => media.revert();
     },
     { scope: problemSection },
   );
@@ -80,7 +92,7 @@ export default function Home() {
   return (
     <div id="top">
       {/* HERO */}
-      <div className="flex flex-col h-screen bg-orange-50 items-center justify-center">
+      <div className="relative flex min-h-[max(100svh,32rem)] flex-col items-center justify-center bg-orange-50 px-6 pb-24 pt-32">
         <div className="absolute top-0 z-10 bg-orange-50 backdrop-blur-2xl p-4 w-95/100 flex justify-between">
           <p className="uppercase font-black text-red-600 tracking-tighter">
             by tonbridgians for tonbridgians
@@ -93,36 +105,36 @@ export default function Home() {
           />
 
           <nav className="hidden gap-4 md:flex">
-            <Link href="/" className="font-black tracking-tighter text-red-600">
+            <a className="font-black tracking-tighter text-red-600" href="/">
               HOME
-            </Link>
-            <Link
-              href="/about"
+            </a>
+            <a
               className="font-black tracking-tighter text-red-600"
+              href="/about"
             >
               ABOUT
-            </Link>
-            <Link
-              href="/contact"
+            </a>
+            <a
               className="font-black tracking-tighter text-red-600"
+              href="/contact"
             >
               CONTACT
-            </Link>
-            <Link
-              href="/privacy"
+            </a>
+            <a
               className="font-black tracking-tighter text-red-600"
+              href="/privacy"
             >
               PRIVACY
-            </Link>
+            </a>
           </nav>
         </div>
 
-        <h1 className="scale-125 text-red-600 text-[6rem] leading-[0.75] tracking-[-0.08em] font-[1000] text-center sm:scale-150 sm:text-[8rem] md:scale-200 md:text-[10rem]">
+        <h1 className="hero-wordmark text-center text-[5rem] font-[1000] leading-[0.75] tracking-[-0.08em] text-red-600 sm:text-[8rem] lg:text-[18rem]">
           <span className="block">TONX</span>
           <span className="block">GRIP</span>
         </h1>
 
-        <div className="absolute top-5/6 w-1/2">
+        <div className="absolute top-5/6 w-4/5 max-w-sm sm:w-1/2">
           <div className="absolute inset-0 translate-x-[10px] translate-y-[10px] bg-[rgba(50,0,0,1)]" />
 
           <button className="relative text-xl uppercase font-bold tracking-tighter text-red-100 bg-red-600 p-2 active:translate-x-[10px] active:translate-y-[10px] transition-transform duration-100 w-full">
@@ -134,11 +146,11 @@ export default function Home() {
       {/* PROBLEM — PINNED SCROLL SECTION - SCROLLING ANIMATIONS ARE MOSTLY AI*/}
       <div
         ref={problemSection}
-        className="relative h-screen bg-red-600 text-orange-50"
+        className="relative min-h-[max(100svh,32rem)] bg-red-600 text-orange-50"
       >
-        <div className="flex h-full flex-col">
-          <div className="flex min-h-0 flex-1 flex-col justify-center md:flex-row">
-            <div className="flex min-w-0 flex-1 flex-col justify-between p-8">
+        <div className="flex min-h-[max(100svh,32rem)] flex-col">
+          <div className="flex flex-1 flex-col justify-center md:flex-row">
+            <div className="flex min-w-0 flex-1 flex-col justify-between p-6 sm:p-8">
               {/* TITLE */}
               <div>
                 <p className="text-red-300/50 uppercase font-black tracking-tighter mb-4">
@@ -151,9 +163,9 @@ export default function Home() {
               </div>
 
               {/* CHANGING TEXT */}
-              <div className="relative max-h-5/10 -translate-y-8 md:-translate-y-12">
+              <div className="relative grid min-h-64 flex-1 grid-cols-1 content-end pt-6 pb-8">
                 {/* 01 */}
-                <div className="problem-text">
+                <div className="problem-text col-start-1 row-start-1 self-end">
                   <p className="text-red-200 uppercase font-black tracking-tighter">
                     01
                   </p>
@@ -171,7 +183,7 @@ export default function Home() {
                 </div>
 
                 {/* 02 */}
-                <div className="problem-text absolute inset-0 opacity-0">
+                <div className="problem-text col-start-1 row-start-1 self-end opacity-0">
                   <p className="text-red-200 uppercase font-black tracking-tighter">
                     02
                   </p>
@@ -189,7 +201,7 @@ export default function Home() {
                 </div>
 
                 {/* 03 */}
-                <div className="problem-text absolute inset-0 opacity-0">
+                <div className="problem-text col-start-1 row-start-1 self-end opacity-0">
                   <p className="text-red-200 uppercase font-black tracking-tighter">
                     03
                   </p>
@@ -208,7 +220,7 @@ export default function Home() {
             </div>
 
             {/* IMAGE */}
-            <div className="hidden h-full flex-1 overflow-hidden p-8 md:block">
+            <div className="hidden min-h-0 flex-1 overflow-hidden p-8 md:block">
               <img
                 className="h-full w-full rounded-2xl object-cover"
                 src="/kick.jpg"
@@ -234,8 +246,8 @@ export default function Home() {
       </div>
 
       {/* SO WE FIXED IT */}
-      <div className="flex flex-col gap-20 h-screen items-center justify-center overflow-hidden bg-orange-50">
-        <h1 className="text-center text-8xl leading-[0.75] tracking-[-0.08em] text-red-600 font-[1000] uppercase md:text-[10rem]">
+      <div className="flex min-h-[max(100svh,32rem)] flex-col items-center justify-center gap-10 bg-orange-50 px-6 py-16 sm:gap-14">
+        <h1 className="text-center text-6xl font-[1000] uppercase leading-[0.75] tracking-[-0.08em] text-red-600 sm:text-8xl lg:text-[10rem]">
           <span className="block">so we</span>
           <span className="block">fixed it.</span>
         </h1>
@@ -423,7 +435,7 @@ export default function Home() {
 
           <nav
             aria-label="Footer navigation"
-            className="flex gap-6 text-sm font-bold uppercase"
+            className="flex flex-wrap gap-x-4 gap-y-3 text-xs font-bold uppercase sm:text-sm"
           >
             <Link
               className="hover:text-red-200 focus-visible:outline-2"
